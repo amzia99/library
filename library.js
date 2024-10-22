@@ -53,7 +53,7 @@ const printTracks = function() {
 // p01: Coding Music - 2 tracks
 // t01: Code Monkey by Jonathan Coulton (Thing a Week Three)
 // t02: Model View Controller by James Dempsey (WWDC 2003)
-const printPlaylist = function(playlistId) {
+function printPlaylist(playlistId) {
        const playlist = library.playlists[playlistId];
        console.log(`${playlist.id}: ${playlist.name} - ${playlist.tracks.length} tracks`);
 
@@ -61,11 +61,11 @@ const printPlaylist = function(playlistId) {
               const track = library.tracks[trackId];
               console.log(`${track.id}: ${track.name} by ${track.artist} (${track.album})`);
        });
-       };
+       }
 
 
 // adds an existing track to an existing playlist
-const addTrackToPlaylist = function(trackId, playlistId) {
+function addTrackToPlaylist(trackId, playlistId) {
        library.playlists[playlistId].tracks.push(trackId);
 }
 
@@ -78,16 +78,28 @@ const generateUid = function() {
 
 
 // adds a track to the library
-const addTrack = function(name, artist, album) {
-
+function addTrack(name, artist, album) {
+       const newId = `t${Object.keys(library.tracks).length + 1}`;
+       library.tracks[newId] = { id: newId, name, artist, album };
 }
 
 
 // adds a playlist to the library
-const addPlaylist = function(name) {
-
+function addPlaylist(name) {
+       const newId = `p${Object.keys(library.tracks).length + 1}`;
+       library.tracks[newId] = { id: newId, name, tracks: [] };
 }
 
+//test code for all functions
+printPlaylists(); 
+printTracks(); 
+printPlaylist('p01'); 
+addTrackToPlaylist('t03', 'p01'); 
+printPlaylist('p01'); 
+addTrack('New Song', 'New Artist', 'New Album'); 
+printTracks(); 
+addPlaylist('My Playlist'); 
+printPlaylists(); 
 
 // STRETCH:
 // given a query string string, prints a list of tracks
